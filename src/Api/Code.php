@@ -1,9 +1,9 @@
 <?php
 
 
-namespace Centras\src\Api;
+namespace Centras\Api;
 
-use Centras\src\Api\Messages\Common;
+use Centras\Api\Messages\Common;
 use Illuminate\Http\JsonResponse;
 
 class Code

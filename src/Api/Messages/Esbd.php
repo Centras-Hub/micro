@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Centras\src\Api\Messages;
+namespace Centras\Api\Messages;
 
 
 class Esbd

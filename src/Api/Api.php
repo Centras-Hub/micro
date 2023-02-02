@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Centras\src\Api;
+namespace Centras\Api;
 
 
 class Api

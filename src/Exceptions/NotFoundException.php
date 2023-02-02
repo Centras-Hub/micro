@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Centras\src\Exceptions;
+namespace Centras\Exceptions;
 
 
 class NotFoundException
