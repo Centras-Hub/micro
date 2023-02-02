@@ -4,7 +4,7 @@
 namespace Centras\Layers\Infrastructure\Logger;
 
 
-class Logger
+abstract class Logger
 {
 
 }
