@@ -8,11 +8,15 @@ use Illuminate\Support\Str;
 class RoundTrip extends Graylog
 {
     /**
+     * в данном массиве будет храниться уникальный ID каждого запроса
+     *
      * @var array
      */
     protected array $requestIDS = [];
 
     /**
+     * Тело запроса Payload - а для запросов в GRAYLOG
+     *
      * @var array
      */
     protected array $payload = [
@@ -33,7 +37,7 @@ class RoundTrip extends Graylog
     public function build()
     {
         $this->payload['host'] = gethostname();
-        $this->payload['title'] = 'запросы с микросервиса' . gethostname();
+        $this->payload['title'] = 'запросы с микросервиса: ' . gethostname();
     }
 
     /**
@@ -42,16 +46,17 @@ class RoundTrip extends Graylog
      */
     public function setGlobalId(string $id): static
     {
-        $this->payload['global_id'] = $id;
+//        $this->payload['global_id'] = $id;
+        $this->payload['order_id'] = $id;
 
         return $this;
     }
 
     /**
-     * @param int $id
+     * @param string $id
      * @return RoundTrip
      */
-    public function setPartnerId(int $id): static
+    public function setPartnerId(string $id): static
     {
         $this->payload['partner_id'] = $id;
 
@@ -59,10 +64,10 @@ class RoundTrip extends Graylog
     }
 
     /**
-     * @param int $id
+     * @param string $id
      * @return $this
      */
-    public function setPaymentId(int $id): static
+    public function setPaymentId(string $id): static
     {
         $this->payload['payment_id'] = $id;
 
@@ -70,10 +75,10 @@ class RoundTrip extends Graylog
     }
 
     /**
-     * @param int $id
+     * @param string $id
      * @return $this
      */
-    public function setProductId(int $id): static
+    public function setProductId(string $id): static
     {
         $this->payload['product_id'] = $id;
 

@@ -10,7 +10,7 @@ class Graylog
     /**
      * @var string
      */
-    protected string $url = 'http://graylog/api/write/log';
+    protected string $url = 'http://logger:8000/api/write/log';
 
     /**
      * @var array
@@ -30,8 +30,13 @@ class Graylog
      */
     public function send()
     {
-        return Http::acceptJson()->post(
-            $this->url
+        $response = Http::acceptJson()->post(
+            $this->url,
+            $this->payload
         );
+
+        if ($response->failed()) {
+
+        }
     }
 }
