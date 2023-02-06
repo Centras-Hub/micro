@@ -4,6 +4,7 @@
 namespace Centras\Layers\Infrastructure\Logger\Graylog;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Client\ConnectionException;
 
 class Graylog
 {
@@ -26,17 +27,23 @@ class Graylog
     }
 
     /**
-     *
+     * @return void
      */
-    public function send()
+    public function send(): void
     {
-        $response = Http::acceptJson()->post(
-            $this->url,
-            $this->payload
-        );
+        try {
+            $response = Http::acceptJson()->post(
+                $this->url,
+                $this->payload
+            );
 
-        if ($response->failed()) {
-
+            if ($response->failed()) {
+                \Log::error('Graylog service error, see the log in service: ', [$response->body()]);
+            }
+        } catch (ConnectionException $exception) {
+            \Log::error('connection error in Graylog service: ' . $exception->getMessage());
+        } catch (\Exception $exception) {
+            \Log::error('Undefined Graylog service error: ' . $exception->getMessage());
         }
     }
 }

@@ -5,7 +5,7 @@ namespace Centras\Layers\Infrastructure\Logger\Graylog;
 
 use Illuminate\Support\Str;
 
-class RoundTrip extends Graylog
+class IO extends Graylog
 {
     /**
      * в данном массиве будет храниться уникальный ID каждого запроса
@@ -19,42 +19,41 @@ class RoundTrip extends Graylog
      *
      * @var array
      */
-    protected array $payload = [
-        "version" => "1.1",
-        "host" => null,
-        "title" => null,
-        "partner_id" => null,
-        "global_id" => null,
-        "request_id" => null,
-        "payment_id" => null,
-        "product_id" => null,
-        "payload" => []
-    ];
+    protected array $payload
+        = [
+            "version"    => "1.1",
+            "host"       => null,
+            "title"      => null,
+            "partner_id" => null,
+            "global_id"  => null,
+            "request_id" => null,
+            "payment_id" => null,
+            "product_id" => null,
+            "payload"    => []
+        ];
 
     /**
-     *
+     * Строем базовые поля
      */
     public function build()
     {
-        $this->payload['host'] = gethostname();
-        $this->payload['title'] = 'запросы с микросервиса: ' . gethostname();
+        $this->payload['host']  = gethostname();
     }
 
     /**
      * @param string $id
-     * @return RoundTrip
+     * @return IO
      */
     public function setGlobalId(string $id): static
     {
-//        $this->payload['global_id'] = $id;
-        $this->payload['order_id'] = $id;
+        $this->payload['global_id'] = $id;
 
         return $this;
     }
 
     /**
      * @param string $id
-     * @return RoundTrip
+     * @return IO
      */
     public function setPartnerId(string $id): static
     {
@@ -88,19 +87,13 @@ class RoundTrip extends Graylog
     /**
      *
      */
-    public function request(array $data)
+    public function request(array $data): void
     {
+        $this->payload['title'] = 'запрос с микросервиса: ' . gethostname();
         $this->payload['request_id'] = $this->generateRequestId();
-        $this->payload['payload'] = $data;
-    }
+        $this->payload['payload']    = $data;
 
-    /**
-     * @param array $data
-     */
-    public function response(array $data)
-    {
-        $this->payload['request_id'] = $this->getLastId();
-        $this->payload['payload'] = $data;
+        $this->send();
     }
 
     /**
@@ -113,6 +106,18 @@ class RoundTrip extends Graylog
         $this->requestIDS[] = $requestId;
 
         return $requestId;
+    }
+
+    /**
+     * @param array $data
+     */
+    public function response(array $data): void
+    {
+        $this->payload['title'] = 'ответ с микросервиса: ' . gethostname();
+        $this->payload['request_id'] = $this->getLastId();
+        $this->payload['payload']    = $data;
+
+        $this->send();
     }
 
     /**

@@ -4,6 +4,7 @@
 namespace Centras\Layers\Data;
 
 use Illuminate\Database\Eloquent\Model;
+
 /**
  * Базовый класс репозитории для Laravel
  *
