@@ -33,14 +33,6 @@ class IO extends Graylog
         ];
 
     /**
-     * Строем базовые поля
-     */
-    public function build()
-    {
-        $this->payload['host']  = gethostname();
-    }
-
-    /**
      * @param string $id
      * @return IO
      */

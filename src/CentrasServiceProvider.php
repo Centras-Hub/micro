@@ -4,7 +4,6 @@
 namespace Centras;
 
 use Centras\Layers\Infrastructure\Logger\Graylog\IO;
-use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 
 class CentrasServiceProvider extends ServiceProvider
@@ -14,19 +13,9 @@ class CentrasServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
-    }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot(Request $request)
-    {
-        $payload = $request->all();
+        $payload = request()->all();
 
         $this->app->singleton('IOLog', function () use ($payload) {
             $ioLog = new IO();
@@ -37,5 +26,17 @@ class CentrasServiceProvider extends ServiceProvider
 
             return $ioLog;
         });
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__ . '/../config/centras.php' => config_path('centras.php'),
+        ]);
     }
 }

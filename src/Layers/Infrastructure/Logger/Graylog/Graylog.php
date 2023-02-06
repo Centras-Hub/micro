@@ -11,7 +11,7 @@ class Graylog
     /**
      * @var string
      */
-    protected string $url = 'http://logger:8000/api/write/log';
+    protected string $url = '';
 
     /**
      * @var array
@@ -19,11 +19,12 @@ class Graylog
     protected array $payload = [];
 
     /**
-     * @return array
+     * Строем базовые поля
      */
-    protected function payload(): array
+    public function build()
     {
-        return $this->payload;
+        $this->url             = config('centras.graylog_url');
+        $this->payload['host'] = gethostname();
     }
 
     /**
@@ -45,5 +46,13 @@ class Graylog
         } catch (\Exception $exception) {
             \Log::error('Undefined Graylog service error: ' . $exception->getMessage());
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected function payload(): array
+    {
+        return $this->payload;
     }
 }
