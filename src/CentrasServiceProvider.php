@@ -26,6 +26,9 @@ class CentrasServiceProvider extends ServiceProvider
 
             return $ioLog;
         });
+//        @todo пока пускай будут
+//        request()->request->remove('partner_id');
+//        request()->request->remove('global_id');
     }
 
     /**

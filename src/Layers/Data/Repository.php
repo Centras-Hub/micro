@@ -31,8 +31,17 @@ abstract class Repository
     /**
      * find by ID
      */
-    public function byId(int $id)
+    public function byId(int $id): Model
     {
-        $this->model->find($id);
+        return $this->model->find($id);
+    }
+
+    /**
+     * @param array $payload
+     * @return mixed
+     */
+    public function create(array $payload)
+    {
+        return $this->model->create($payload);
     }
 }
