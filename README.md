@@ -42,7 +42,7 @@ Laravel-centras - наша собственная библиотека, вклю
 
 [Для примера, можно взять composer.json файл одного из микросервисов.](https://git.cic.kz/micro/partner/-/blob/master/composer.json)
 
-2. Создайте в папке ``config``, файл с названием ``auth.json``. 
+2. Создайте в КОРНЕВОМ каталоге проекта, файл с названием ``auth.json``. 
 3. Скопируйте в только что созданный файл, содержимое из файла ``auth.json``, находящегося в проекте [Config, в папке .dev](https://git.cic.kz/micro/config/-/blob/master/.dev/auth.json)
 4. Запустите комманду.
 ```bash
