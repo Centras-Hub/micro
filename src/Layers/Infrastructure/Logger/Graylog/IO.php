@@ -24,8 +24,8 @@ class IO extends Graylog
             "version"    => "1.1",
             "host"       => null,
             "title"      => null,
-            "partner_id" => null,
-            "global_id"  => null,
+            "partner_id" => '0',
+            "global_id"  => '0',
             "request_id" => null,
             "payment_id" => null,
             "product_id" => null,
@@ -44,6 +44,14 @@ class IO extends Graylog
     }
 
     /**
+     * @return mixed
+     */
+    public function getGlobalId(): mixed
+    {
+        return $this->payload['global_id'];
+    }
+
+    /**
      * @param string $id
      * @return IO
      */
@@ -52,6 +60,14 @@ class IO extends Graylog
         $this->payload['partner_id'] = $id;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPartnerId(): mixed
+    {
+        return $this->payload['partner_id'];
     }
 
     /**

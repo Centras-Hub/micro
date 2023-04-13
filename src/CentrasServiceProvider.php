@@ -21,8 +21,14 @@ class CentrasServiceProvider extends ServiceProvider
             $ioLog = new IO();
 
             $ioLog->build();
-            $ioLog->setPartnerId($payload['partner_id']);
-            $ioLog->setGlobalId($payload['global_id']);
+
+            if(isset($payload['global_id'])){
+                $ioLog->setGlobalId($payload['global_id']);
+            }
+
+            if(isset($payload['partner_id'])){
+                $ioLog->setPartnerId($payload['partner_id']);
+            }
 
             return $ioLog;
         });
