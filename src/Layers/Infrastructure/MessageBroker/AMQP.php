@@ -1,10 +1,8 @@
 <?php
 
-
 namespace Centras\Layers\Infrastructure\MessageBroker;
 
-
-class RabitMQ
+class AMQP
 {
 
 }
