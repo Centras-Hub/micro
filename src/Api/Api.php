@@ -36,7 +36,7 @@ class Api
      */
     public static function response(array $data = [], int $code = 200, string $message = Common::SUCCESFUL): JsonResponse
     {
-        $code = $code !== 0 ?: 500; // иногда может приходить code 0 от чего начинается ломатся
+        $code = $code !== 0 ? $code : 500; // иногда может приходить code 0 от чего начинается ломатся
 
         self::$body['headers']['code']    = $code;
         self::$body['headers']['status']  = ($code >= 200 && $code <= 299) ? self::SUCCESS : self::ERROR;
