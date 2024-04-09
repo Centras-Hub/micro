@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\messages;
+namespace Centras\Api\Messages;
 
 class KS
 {
