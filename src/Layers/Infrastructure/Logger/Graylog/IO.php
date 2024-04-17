@@ -22,7 +22,6 @@ class IO extends Graylog
     protected array $payload
         = [
             "version"    => "1.1",
-            "host"       => null,
             "title"      => null,
             "partner_id" => '0',
             "global_id"  => '0',
@@ -97,7 +96,7 @@ class IO extends Graylog
      */
     public function request(array $data): void
     {
-        $this->payload['title'] = 'запрос с микросервиса: ' . gethostname();
+        $this->payload['title'] = 'request from microservice: ' . gethostname();
         $this->payload['request_id'] = $this->generateRequestId();
         $this->payload['payload']    = $data;
 
@@ -121,7 +120,7 @@ class IO extends Graylog
      */
     public function response(array $data): void
     {
-        $this->payload['title'] = 'ответ с микросервиса: ' . gethostname();
+        $this->payload['title'] = 'response from microservice: ' . gethostname();
         $this->payload['request_id'] = $this->getLastId();
         $this->payload['payload']    = $data;
 

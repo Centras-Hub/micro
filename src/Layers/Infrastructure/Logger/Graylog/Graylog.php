@@ -9,11 +9,6 @@ use Illuminate\Http\Client\ConnectionException;
 class Graylog
 {
     /**
-     * @var string
-     */
-    protected string $url = '';
-
-    /**
      * @var array
      */
     protected array $payload = [];
@@ -23,7 +18,6 @@ class Graylog
      */
     public function build()
     {
-        $this->url             = config('centras.graylog_url');
         $this->payload['host'] = gethostname();
     }
 
@@ -32,20 +26,14 @@ class Graylog
      */
     public function send(): void
     {
-        try {
-            $response = Http::acceptJson()->post(
-                $this->url,
-                $this->payload
-            );
+        $logData = [
+            'title' => $this->payload['title'],
+            'payload' => $this->payload['payload'],
+            'global_id' => $this->payload['global_id']
+        ];
 
-            if ($response->failed()) {
-                \Log::error('Graylog service error, see the log in service: ', [$response->body()]);
-            }
-        } catch (ConnectionException $exception) {
-            \Log::error('connection error in Graylog service: ' . $exception->getMessage());
-        } catch (\Exception $exception) {
-            \Log::error('Undefined Graylog service error: ' . $exception->getMessage());
-        }
+        \Log::build(['driver' => 'single', 'path' => storage_path('logs/io-log/laravel-io-'.date("Y-m-d").'.log')])
+            ->info(json_encode($logData));
     }
 
     /**
